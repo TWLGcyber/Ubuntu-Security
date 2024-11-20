@@ -18,7 +18,17 @@ echo "This Script will create a second terminal window with a helper script runn
 echo
 
 sudo chmod +x Support.sh
-sudo gnome-terminal -- ./Support.sh
+sudo gnome-terminal -- bash -c "./Support.sh; exec bash"
+
+#Error Handling for Gnome-Terminal
+echo
+read -p "Did the above command fail to open a new terminal window?" -n 1 -r
+echo    # (optional) move to a new line
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    sudo apt install dbus-x11 -y
+    sudo gnome-terminal -- bash -c "./Support.sh; exec bash"
+fi
 
 #Forensics Questions
 read -p "Have you solved the forensic questions?" -n 1 -r
