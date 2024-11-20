@@ -1,0 +1,44 @@
+-Most application-specific configuration can be googled with "how to secure APPLICATION"
+-Some links and guides are provided down below
+-It is also a good idea to go back and check which programs are installed
+
+
+-You should check the below files if you have not already:
+Manual Configuration Edits-
+/etc/apt/sources.list	        #check for malicious sources
+/etc/resolv.conf		          #make sure if safe, use 8.8.8.8 for name server
+/etc/hosts  			            #make sure is not redirecting
+/etc/rc.local 		            #should be empty except for 'exit 0'
+/etc/apt/sources.list         #check for malicious sources
+/etc/securetty                #Disable direct root login
+/etc/passwd                   #Looking for users with userid of 0 ROOT
+
+
+-Below are some resources for configuring OpenSSH:
+https://goteleport.com/blog/how-to-configure-ssh-certificate-based-authentication/
+https://www.digitalocean.com/community/tutorials/how-to-harden-openssh-on-ubuntu-20-04
+
+
+-Below are some configurations for VSFTPD:
+https://hackviser.com/tactics/hardening/vsftpd
+https://docs.rockylinux.org/guides/file_sharing/secure_ftp_server_vsftpd/
+Secure the /etc/vsftpd.conf
+anonymous_enable=ON
+local_enable=YES
+write_enable=YES
+chroot_local_user=YES
+ssl_enable=YES
+
+
+-Below are some links to use in securing systems and certain software.
+https://www.digitalocean.com/community/tutorials/how-to-install-webmin-on-ubuntu-20-04
+
+https://github.com/curtisf/cyberpatriot-debian8-hardening
+
+http://cypat.guru/index.php/Auditing_Linux_Systems
+
+https://github.com/BaiqingL/CyberPatriotScripts/blob/master/Linux/main.sh
+
+http://cypat.guru/index.php/Linux_Hardening
+
+http://wiki.groovix.org/index.php?title=Enable_Guest_Logins_in_Ubuntu_18.04_Bionic
