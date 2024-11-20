@@ -183,8 +183,7 @@ then
     PROGRAM_LIST_FILE=Secondary_Scripts/programs.txt
     while IFS= read -r program; do
         if [ -n "$program" ]; then
-            echo "Do you wish to delete the program: $program? (y/n)"
-            read -r response
+            read -p "Do you wish to delete the program: $program? (y/n)" -n 1 -r
             if [[ "$response" =~ ^[Yy]$ ]]; then
                 sudo apt purge "$program*"
                 if [ $? -eq 0 ]; then
