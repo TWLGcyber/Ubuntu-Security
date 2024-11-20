@@ -107,7 +107,7 @@ read -p "Continue?" -n 1 -r
 echo    # (optional) move to a new line
 if [[  $REPLY =~ ^[Yy]$ ]]
 then
-    sudo ./Secondary_Scripts/Sudoers.sh
+    sudo bash Secondary_Scripts/Sudoers.sh
 fi
 sudo sed -i '$a kernel.randomize_va_space = 2' /etc/sysctl.conf
 sudo sed -i '$a kernel.exec-shield = 1' /etc/sysctl.conf
@@ -180,20 +180,5 @@ read -p "Would you like to uninstall malicious packages? Note that some packages
 echo    # (optional) move to a new line
 if [[  $REPLY =~ ^[Yy]$ ]]
 then
-    PROGRAM_LIST_FILE=Secondary_Scripts/programs.txt
-    while IFS= read -r program; do
-        if [ -n "$program" ]; then
-            read -p "Do you wish to delete the program: $program? (y/n)" -n 1 -r
-            if [[ "$response" =~ ^[Yy]$ ]]; then
-                sudo apt purge "$program*"
-                if [ $? -eq 0 ]; then
-                    echo "$program has been successfully removed."
-                else
-                    echo "Failed to remove $program."
-                fi
-            else
-                echo "Skipping $program."
-            fi
-        fi
-    done < "$PROGRAM_LIST_FILE"
+    sudo bash Secondary_Scripts/Uninstall.sh
 fi

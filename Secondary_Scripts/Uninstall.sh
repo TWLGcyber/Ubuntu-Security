@@ -1,22 +1,42 @@
 #!/bin/bash
 
-PROGRAM_LIST_FILE=$1
-# Read the list of programs line by line
-while IFS= read -r program; do
-    if [ -n "$program" ]; then
-        echo "Do you wish to delete the program: $program? (y/n)"
-        read -r response
-        if [[ "$response" =~ ^[Yy]$ ]]; then
-            sudo apt purge "$program*"
-            if [ $? -eq 0 ]; then
-                echo "$program has been successfully removed."
-            else
-                echo "Failed to remove $program."
-            fi
-        else
-            echo "Skipping $program."
-        fi
-    fi
-done < "$PROGRAM_LIST_FILE"
-
-echo "Script execution complete."
+sudo apt purge nis*
+sudo apt purge yp-tools*
+sudo apt purge tftpd*
+sudo apt purge atftpd*
+sudo apt purge tftpd-hpa*
+sudo apt purge rsh-server*
+sudo apt purge rsh-redone-server*
+sudo apt purge bind9*
+sudo apt purge opensmtpd*
+sudo apt purge icecast2*
+sudo apt purge manaplus*
+sudo apt purge gameconqueror*
+sudo apt purge nginx*
+sudo apt purge freeciv*
+sudo apt purge pure-ftpd*
+sudo apt purge kismet*
+sudo apt purge vsftpd*
+sudo apt purge telnet*
+sudo apt purge samba*
+sudo apt purge nmap*
+sudo apt purge zenmap*
+sudo apt purge hydra*
+sudo apt purge john*
+sudo apt purge nikto*
+sudo apt purge netcat*
+sudo apt purge wireshark*
+sudo apt purge weplab*
+sudo apt purge pyrit*
+sudo apt purge ophcrack*
+sudo apt purge wesnoth*
+sudo apt purge minetest*
+sudo apt purge mines*
+sudo apt purge remmina*
+sudo apt purge apache2*
+sudo apt purge ettercap*
+sudo apt purge endless-sky*
+sudo apt purge lolcat*
+sudo apt purge cowsay*
+sudo apt purge 4g8*
+sudo apt purge deluge*
