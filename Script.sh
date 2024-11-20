@@ -24,7 +24,7 @@ sudo gnome-terminal -- bash -c "./Support.sh; exec bash"
 echo
 read -p "Did the above command fail to open a new terminal window?" -n 1 -r
 echo    # (optional) move to a new line
-if [[ ! $REPLY =~ ^[Yy]$ ]]
+if [[  $REPLY =~ ^[Yy]$ ]]
 then
     sudo apt install dbus-x11 -y
     sudo gnome-terminal -- bash -c "./Support.sh; exec bash"
@@ -49,7 +49,9 @@ then
 fi
 
 #Set Permissions
+echo
 echo "Setting the necessary permissions to run this script!"
+echo
 sudo chmod +x Secondary_Scripts/Sudoers.sh
 sudo chmod +x Secondary_Scripts/Uninstall.sh
 
@@ -64,6 +66,7 @@ sudo nano trusted.log
 
 #Install Packages
 sudo apt install auditd audispd-plugins -y
+sudo apt install plocate -y
 sudo apt install --only-upgrade bash
 sudo dpkg-query -l | tee installed_packages.log
 sudo nano installed_packages.log
@@ -82,7 +85,7 @@ sudo ufw logging on
 cat /etc/crontab | tee cron.log
 sudo nano cron.log
 echo
-echo "If the next command prompts for an editor, select nano"
+echo "If the next command prompts for an editor, select nano."
 sudo crontab -e
 
 #Files
@@ -97,10 +100,11 @@ sudo chmod 644 /etc/passwd
 sudo chmod 640 /etc/shadow
 sudo service --status-all | tee services.log
 sudo nano services.log
+echo
 echo "The script will now check for unauthorized users"
 read -p "Continue?" -n 1 -r
 echo    # (optional) move to a new line
-if [[ ! $REPLY =~ ^[Yy]$ ]]
+if [[  $REPLY =~ ^[Yy]$ ]]
 then
     sudo ./Secondary_Scripts/Sudoers.sh
 fi
@@ -118,14 +122,15 @@ sudo sed -i '$a net.ipv4.tcp_syncookies = 1' /etc/sysctl.conf
 sudo sed -i '$a net.ipv4.ip_foward = 0' /etc/sysctl.conf
 sudo sed -i '$a net.ipv4.conf.all.send_redirects = 0' /etc/sysctl.conf
 sudo sed -i '$a net.ipv4.conf.default.send_redirects = 0' /etc/sysctl.conf
-sudo sed -i '$a net.ipv4.icmp_echo_ignore_broadcasts = 1' /etc/sysctl.con
+sudo sed -i '$a net.ipv4.icmp_echo_ignore_broadcasts = 1' /etc/sysctl.conf
 sudo sed -i '$a net.ipv4.icmp_ignore_bogus_error_messages = 1' /etc/sysctl.conf
 sudo sed -i '$a net.ipv4.conf.all.log_martians = 1' /etc/sysctl.conf
 
 #OpenSSH
+echo
 read -p "Are you configuring OpenSSH?" -n 1 -r
 echo    # (optional) move to a new line
-if [[ ! $REPLY =~ ^[Yy]$ ]]
+if [[  $REPLY =~ ^[Yy]$ ]]
 then
     sudo apt install openssh-server -y
     sudo ufw allow ssh
@@ -152,9 +157,10 @@ echo
 echo "Setting the account lockout policy. If no points are awarded, please change the value to 1800. If points are still not awarded, set the value back to 0"
 sleep 20
 sudo sed -i '$a auth required pam_tally2.so deny=5 onerr=fail unlock_time=1800' /etc/pam.d/common-auth
+echo
 read -p "Would you like to configure password complexity?" -n 1 -r
 echo    # (optional) move to a new line
-if [[ ! $REPLY =~ ^[Yy]$ ]]
+if [[  $REPLY =~ ^[Yy]$ ]]
 then
     sudo nano /etc/pam.d/common-password
     sudo nano /etc/security/pwquality.conf
@@ -162,18 +168,20 @@ then
 fi
 
 #LightDM
+echo
 read -p "Is LightDM the current display manager?" -n 1 -r
 echo    # (optional) move to a new line
-if [[ ! $REPLY =~ ^[Yy]$ ]]
+if [[  $REPLY =~ ^[Yy]$ ]]
 then
     sudo sed -i '$a allow-guest=false' /etc/lightdm/lightdm.conf
     sudo sed -i '$a greeter-hide-users=true' /etc/lightdm/lightdm.conf
 fi
 
 #Uninstall Packages
+echo
 read -p "Would you like to uninstall malicious packages? Note that some packages may be required, so pay attention." -n 1 -r
 echo    # (optional) move to a new line
-if [[ ! $REPLY =~ ^[Yy]$ ]]
+if [[  $REPLY =~ ^[Yy]$ ]]
 then
     sudo ./Secondary_Scripts/Uninstall.sh programs.txt
 fi

@@ -2,12 +2,15 @@
 
 echo
 echo "This script is used to support the main Script, and will provide guidance along the way."
+echo
 echo "Please wait for the main Script to prompt about configuring OpenSSH"
+echo
+echo
 
 #OpenSSH Configuration
 read -p "Are you configuring OpenSSH?" -n 1 -r
 echo    # (optional) move to a new line
-if [[ ! $REPLY =~ ^[Yy]$ ]]
+if [[  $REPLY =~ ^[Yy]$ ]]
 then
     echo "Please uncomment the lines and set the following configurations:"
     echo
@@ -22,9 +25,11 @@ then
 fi
 
 #Password Complexity
-read -p "Have you solved the forensic questions?" -n 1 -r
+echo
+echo
+read -p "Are you configuring password complexity?" -n 1 -r
 echo    # (optional) move to a new line
-if [[ ! $REPLY =~ ^[Yy]$ ]]
+if [[  $REPLY =~ ^[Yy]$ ]]
 then
     echo "Please make the following changes to the file:"
     echo
