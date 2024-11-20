@@ -22,15 +22,16 @@ sudo gnome-terminal -- bash -c "./Support.sh; exec bash"
 
 #Error Handling for Gnome-Terminal
 echo
-read -p "Did the above command fail to open a new terminal window?" -n 1 -r
+read -p "Did the above command open a new terminal window?" -n 1 -r
 echo    # (optional) move to a new line
-if [[  $REPLY =~ ^[Yy]$ ]]
+if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
     sudo apt install dbus-x11 -y
     sudo gnome-terminal -- bash -c "./Support.sh; exec bash"
 fi
 
 #Forensics Questions
+echo
 read -p "Have you solved the forensic questions?" -n 1 -r
 echo    # (optional) move to a new line
 if [[ ! $REPLY =~ ^[Yy]$ ]]
@@ -40,6 +41,7 @@ then
 fi
 
 #Users
+echo
 read -p "Have you audited the users & changed insecure passwords?" -n 1 -r
 echo    # (optional) move to a new line
 if [[ ! $REPLY =~ ^[Yy]$ ]]
@@ -61,12 +63,11 @@ sudo cp Secondary_Scripts/sources.list /etc/apt/sources.list
 sudo apt install unattended-upgrades -y
 sudo dpkg-reconfigure -plow unattended-upgrades
 sudo apt update
-sudo gpg /etc/apt/trusted.gpg | tee trusted.log
-sudo nano trusted.log
 
 #Install Packages
 sudo apt install auditd audispd-plugins -y
 sudo apt install plocate -y
+sudo apt install net-tools -y
 sudo apt install --only-upgrade bash
 sudo dpkg-query -l | tee installed_packages.log
 sudo nano installed_packages.log
@@ -154,10 +155,6 @@ sudo sed -i '/^SYSLOG_SU_ENAB/ c\SYSLOG_SU_ENAB yes' /etc/login.defs
 sudo sed -i '/^SYSLOG_SG_ENAB/ c\SYSLOG_SG_ENAB yes' /etc/login.defs
 sudo sed -i '/^ENCRYPT_METHOD/ c\ENCRYPT_METHOD SHA512' /etc/login.defs
 echo
-echo "Setting the account lockout policy. If no points are awarded, please change the value to 1800. If points are still not awarded, set the value back to 0"
-sleep 20
-sudo sed -i '$a auth required pam_tally2.so deny=5 onerr=fail unlock_time=1800' /etc/pam.d/common-auth
-echo
 read -p "Would you like to configure password complexity?" -n 1 -r
 echo    # (optional) move to a new line
 if [[  $REPLY =~ ^[Yy]$ ]]
@@ -183,5 +180,21 @@ read -p "Would you like to uninstall malicious packages? Note that some packages
 echo    # (optional) move to a new line
 if [[  $REPLY =~ ^[Yy]$ ]]
 then
-    sudo ./Secondary_Scripts/Uninstall.sh programs.txt
+    PROGRAM_LIST_FILE=Secondary_Scripts/programs.txt
+    while IFS= read -r program; do
+        if [ -n "$program" ]; then
+            echo "Do you wish to delete the program: $program? (y/n)"
+            read -r response
+            if [[ "$response" =~ ^[Yy]$ ]]; then
+                sudo apt purge "$program*"
+                if [ $? -eq 0 ]; then
+                    echo "$program has been successfully removed."
+                else
+                    echo "Failed to remove $program."
+                fi
+            else
+                echo "Skipping $program."
+            fi
+        fi
+    done < "$PROGRAM_LIST_FILE"
 fi

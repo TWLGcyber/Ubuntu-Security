@@ -35,6 +35,7 @@ then
     echo
     echo "With the line including 'pam_unix.so' add the following to the end: sha512 remember=5 minlen=8"
     echo
+    sleep 20
     echo "A new file will open, you need to uncomment the lines and make the following changes:"
     echo
     echo "Set 'difok' to 3"
@@ -45,5 +46,5 @@ then
     echo "Set 'enforcing' to 1"
     echo "Set 'retry' to 3"
     echo
-    echo "Configuration completed!
+    echo "Configuration completed!"
 fi
