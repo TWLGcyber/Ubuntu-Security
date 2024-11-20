@@ -17,6 +17,9 @@ echo
 echo "This Script will create a second terminal window with a helper script running alongside. This script will also open windows for you to review files."
 echo
 
+sudo chmod +x Support.sh
+sudo gnome-terminal -- ./Support.sh
+
 #Forensics Questions
 read -p "Have you solved the forensic questions?" -n 1 -r
 echo    # (optional) move to a new line
