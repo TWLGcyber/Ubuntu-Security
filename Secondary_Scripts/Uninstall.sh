@@ -4,6 +4,7 @@ sudo apt purge nis*
 sudo apt purge yp-tools*
 sudo apt purge tftpd*
 sudo apt purge atftpd*
+sudo apt purge aircrack-ng*
 sudo apt purge tftpd-hpa*
 sudo apt purge rsh-server*
 sudo apt purge rsh-redone-server*
