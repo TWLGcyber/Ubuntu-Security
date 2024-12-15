@@ -41,3 +41,5 @@ sudo apt purge lolcat*
 sudo apt purge cowsay*
 sudo apt purge 4g8*
 sudo apt purge deluge*
+sudo apt install --reinstall ubuntu-desktop
+sudo apt install --reinstall ubuntu-minimal
